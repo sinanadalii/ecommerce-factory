@@ -23,8 +23,8 @@ export function Features() {
       <Container>
         <Heading
           eyebrow="Features"
-          title="Everything you need to ship client stores"
-          description="A complete ecommerce engine — not a starter kit. Each piece is built so you spend time selling, not rebuilding."
+          title="Everything Phase 2 connects."
+          description="A complete path from demo selection to AI-assisted editing, checkout capture and order management."
         />
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-card border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">

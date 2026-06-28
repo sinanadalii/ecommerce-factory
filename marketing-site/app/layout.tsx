@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 
 const title = `${PRODUCT.name} — ${PRODUCT.tagline}`;
 const description =
-  "A multi-tenant ecommerce engine for agencies and freelancers. Launch premium client storefronts from one install, customise them with a no-code admin, and deploy anywhere — you own the code.";
+  "A multi-tenant ecommerce engine with distinct demos, AI-assisted editing, checkout capture, orders admin and Persian font support.";
 
 export const metadata: Metadata = {
   title: { default: title, template: `%s — ${PRODUCT.name}` },

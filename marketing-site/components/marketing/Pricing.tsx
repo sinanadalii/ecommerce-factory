@@ -11,8 +11,8 @@ export function Pricing() {
       <Container>
         <Heading
           eyebrow="Pricing"
-          title="Buy once. Ship unlimited stores."
-          description="One codebase you own — no per-store fees, no platform tax. Final pricing lands at launch; the tiers below are placeholders."
+          title="Pick the workflow you want to productize."
+          description="Pricing is still placeholder, but the preview now shows the real Phase 2 surface: editor, AI assistant, checkout and orders."
         />
 
         <div className="mt-14 grid items-start gap-5 lg:grid-cols-3">
@@ -65,7 +65,7 @@ export function Pricing() {
         </div>
 
         <p className="mt-6 text-center text-xs text-subtle">
-          Placeholder pricing for this preview. 30-day money-back guarantee at launch.
+          Placeholder pricing for this preview. Phase 2 functionality is available in the engine now.
         </p>
       </Container>
     </section>

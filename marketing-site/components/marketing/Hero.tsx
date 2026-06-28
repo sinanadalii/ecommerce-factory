@@ -27,35 +27,35 @@ export function Hero() {
             className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3.5 py-1.5 text-xs text-muted backdrop-blur transition-colors hover:border-gold/40 hover:text-foreground"
           >
             <span className="inline-block size-1.5 rounded-full bg-gold" />
-            v1.0 — Demo Store Pack now included
+            Phase 2 is live: AI editor, checkout and orders
             <ArrowRight className="size-3.5" strokeWidth={1.75} />
           </a>
 
           {/* Headline */}
           <h1 className="animate-fade-up mt-7 max-w-4xl font-serif text-[2.6rem] font-medium leading-[1.03] tracking-tight text-foreground balance sm:text-6xl lg:text-[4.5rem]">
-            Launch premium stores in{" "}
-            <span className="text-gold-gradient">minutes, not months.</span>
+            Launch editable stores with{" "}
+            <span className="text-gold-gradient">AI, checkout and admin.</span>
           </h1>
 
           <p className="animate-fade-up mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            Ecommerce Factory is a multi-tenant store engine for agencies and
-            freelancers. One install, unlimited client storefronts, and a no-code
-            admin your clients will actually use.
+            Ecommerce Factory is now connected end to end: choose a styled demo,
+            edit it visually or with AI, capture checkout orders and manage them
+            from the admin panel.
           </p>
 
           {/* CTAs */}
           <div className="animate-fade-up mt-9 flex flex-col gap-3 sm:flex-row">
             <Button href={ENGINE_LINKS.admin} variant="gold" size="lg">
-              Start building
+              Open admin
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
-            <Button href="#demos" variant="secondary" size="lg">
-              Explore live demos
+            <Button href={ENGINE_LINKS.assistant} variant="secondary" size="lg">
+              Try AI assistant
             </Button>
           </div>
 
           <p className="animate-fade-up mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-subtle">
-            {["Three demo stores included", "Own your code", "Deploy anywhere"].map((t) => (
+            {["Distinct demo styles", "Persian fonts", "Checkout + orders"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5">
                 <Check className="size-3.5 text-gold" strokeWidth={2} /> {t}
               </span>

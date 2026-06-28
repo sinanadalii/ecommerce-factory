@@ -4,6 +4,7 @@ import { SocialProof } from "@/components/marketing/SocialProof";
 import { Problem } from "@/components/marketing/Problem";
 import { Solution } from "@/components/marketing/Solution";
 import { DemoShowcase } from "@/components/marketing/DemoShowcase";
+import { PhaseTwoFlow } from "@/components/marketing/PhaseTwoFlow";
 import { Features } from "@/components/marketing/Features";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { Comparison } from "@/components/marketing/Comparison";
@@ -28,6 +29,7 @@ export default function HomePage() {
         <Problem />
         <Solution />
         <DemoShowcase />
+        <PhaseTwoFlow />
         <Features />
         <HowItWorks />
         <Comparison />

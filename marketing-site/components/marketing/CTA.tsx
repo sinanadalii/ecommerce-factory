@@ -14,30 +14,30 @@ export function CTA() {
           <div className="relative mx-auto max-w-2xl">
             <p className="eyebrow mb-4">Get started</p>
             <h2 className="font-serif text-3xl font-medium leading-tight text-foreground balance sm:text-5xl">
-              Stop rebuilding the same store.
+              Open the Phase 2 engine.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted">
-              Launch your next ten client storefronts from one install. Premium by
-              default, no-code for clients, owned by you.
+              Start in the admin, reshape a demo with AI, run a checkout test and
+              watch the order appear in the panel.
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button href={ENGINE_LINKS.admin} variant="gold" size="lg">
-                Start building
+                Open admin
                 <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
-              <Button href="#demos" variant="secondary" size="lg">
-                Book a demo
+              <Button href={ENGINE_LINKS.assistant} variant="secondary" size="lg">
+                Try AI assistant
               </Button>
             </div>
 
             <div className="mt-7 inline-flex items-center gap-3 rounded-lg border border-border bg-background/60 px-4 py-2.5">
               <span className="select-none font-mono text-xs text-subtle">$</span>
-              <code className="font-mono text-xs text-foreground">npm install &amp;&amp; npm run setup</code>
+              <code className="font-mono text-xs text-foreground">/admin/assistant -&gt; /checkout -&gt; /admin/orders</code>
             </div>
 
             <p className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-subtle">
-              {["No platform lock-in", "Own the code", "Cancel anytime"].map((t) => (
+              {["AI-ready editor", "Checkout flow", "Orders panel"].map((t) => (
                 <span key={t} className="inline-flex items-center gap-1.5">
                   <Check className="size-3.5 text-gold" strokeWidth={2} /> {t}
                 </span>

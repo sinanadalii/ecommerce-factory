@@ -9,8 +9,8 @@ export function HowItWorks() {
       <Container>
         <Heading
           eyebrow="How it works"
-          title="From zero to deployed in four steps"
-          description="The whole workflow, start to finish. No hidden setup, no surprise config — what you see is the product."
+          title="The Phase 2 user flow."
+          description="A visitor can move from landing to demo editing, checkout and order review without falling out of the product."
         />
 
         {/* Flow pills */}

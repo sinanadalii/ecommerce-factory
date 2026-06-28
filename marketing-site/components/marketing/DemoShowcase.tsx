@@ -18,8 +18,8 @@ export function DemoShowcase() {
       <Container>
         <Heading
           eyebrow="Interactive demos"
-          title="One engine. Three premium storefronts."
-          description="The same system, themed three ways. Click through real demo stores you can show a client tomorrow — all built from one codebase."
+          title="Three demos that finally feel different."
+          description="Beauty, Tech and Lifestyle now have distinct presets, fonts, colours and product rhythms. Open a demo editor and reshape it from the Phase 2 admin."
         />
 
         {/* Tabs */}
@@ -71,11 +71,11 @@ export function DemoShowcase() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href={demo.href} variant="secondary" size="md">
-                View live demo
+                Open demo editor
                 <ArrowUpRight className="size-4" strokeWidth={1.75} />
               </Button>
-              <Button href="#cta" variant="ghost" size="md">
-                Use as a starter →
+              <Button href="#phase-2-flow" variant="ghost" size="md">
+                See the flow -&gt;
               </Button>
             </div>
           </div>
