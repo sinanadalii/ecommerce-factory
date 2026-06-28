@@ -17,7 +17,8 @@ const envUrl = (value: string | undefined): string | undefined => {
 const withPath = (base: string | undefined, path: string): string | undefined =>
   base ? `${base.replace(/\/+$/, "")}${path}` : undefined;
 
-const ENGINE_URL = envUrl(process.env.NEXT_PUBLIC_ENGINE_URL);
+const DEFAULT_ENGINE_URL = "https://ecommerce-factory-engine.sinanadali1379.workers.dev";
+const ENGINE_URL = envUrl(process.env.NEXT_PUBLIC_ENGINE_URL) ?? DEFAULT_ENGINE_URL;
 
 export const ENGINE_LINKS = {
   storefront: ENGINE_URL ?? "#demos",
