@@ -7,6 +7,7 @@ import {
   FileText,
   TrendingUp,
   ShoppingCart,
+  WandSparkles,
 } from "lucide-react";
 import { getActiveClient, getActiveClientKey } from "@/config/tenant";
 import { getAllEffectiveClients, isOverridden } from "@/config/client-store";
@@ -88,6 +89,29 @@ export default async function DashboardPage() {
           The active tenant is resolved per request from the host. Use a tenant
           domain/subdomain (or the env fallback) to preview a specific store.
         </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link
+          href="/admin/orders"
+          className="rounded-card border border-border bg-surface/50 p-4 transition-colors hover:border-gold/40"
+        >
+          <ShoppingCart className="size-5 text-gold" strokeWidth={1.75} />
+          <h2 className="mt-3 text-sm font-semibold text-foreground">Orders & customers</h2>
+          <p className="mt-1 text-xs text-muted">
+            Review captured checkout orders across every tenant.
+          </p>
+        </Link>
+        <Link
+          href="/admin/assistant"
+          className="rounded-card border border-border bg-surface/50 p-4 transition-colors hover:border-gold/40"
+        >
+          <WandSparkles className="size-5 text-gold" strokeWidth={1.75} />
+          <h2 className="mt-3 text-sm font-semibold text-foreground">AI site assistant</h2>
+          <p className="mt-1 text-xs text-muted">
+            Describe a brand direction and apply a guided edit to a demo store.
+          </p>
+        </Link>
       </div>
 
       {/* Store cards */}

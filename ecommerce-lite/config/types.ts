@@ -182,9 +182,16 @@ export type PageStructure = { sections: SectionSlot[] };
  */
 export type BrandTheme = {
   accent?: string;
+  accent2?: string;
   background?: string;
   surface?: string;
   foreground?: string;
+  muted?: string;
+  border?: string;
+  radius?: string;
+  headingFont?: string;
+  bodyFont?: string;
+  stylePreset?: "luxury" | "tech" | "lifestyle" | "beauty";
 };
 
 export type BrandConfig = {
@@ -211,4 +218,32 @@ export type ClientConfig = {
   };
   /** All section content, keyed to match the registry. */
   content: SectionPropsMap;
+};
+
+export type OrderStatus = "new" | "paid" | "fulfilling" | "shipped" | "cancelled";
+
+export type StoreOrderItem = {
+  productId: string;
+  slug: string;
+  name: string;
+  image: string;
+  quantity: number;
+  unitPrice: number;
+};
+
+export type StoreOrder = {
+  id: string;
+  clientId: string;
+  clientName: string;
+  status: OrderStatus;
+  createdAt: string;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  items: StoreOrderItem[];
+  subtotal: number;
+  notes?: string;
 };

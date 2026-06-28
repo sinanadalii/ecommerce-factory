@@ -89,6 +89,37 @@ export function TextAreaField({
   );
 }
 
+export function SelectField({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: { label: string; value: string }[];
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-subtle">
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground transition-colors focus:border-gold/50 focus:outline-none"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value} className="bg-background text-foreground">
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 export function ColorField({
   label,
   value,

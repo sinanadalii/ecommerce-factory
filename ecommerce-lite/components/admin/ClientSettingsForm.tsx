@@ -11,6 +11,7 @@ import {
   Field,
   IconAction,
   Panel,
+  SelectField,
   Toggle,
 } from "@/components/admin/AdminUI";
 
@@ -40,9 +41,16 @@ export function ClientSettingsForm({ clientId, edited, brand, sections }: Props)
   const [name, setName] = useState(brand.name);
   const [logo, setLogo] = useState(brand.logo ?? "");
   const [accent, setAccent] = useState(brand.theme?.accent ?? "");
+  const [accent2, setAccent2] = useState(brand.theme?.accent2 ?? "");
   const [background, setBackground] = useState(brand.theme?.background ?? "");
   const [surface, setSurface] = useState(brand.theme?.surface ?? "");
   const [foreground, setForeground] = useState(brand.theme?.foreground ?? "");
+  const [muted, setMuted] = useState(brand.theme?.muted ?? "");
+  const [border, setBorder] = useState(brand.theme?.border ?? "");
+  const [radius, setRadius] = useState(brand.theme?.radius ?? "");
+  const [headingFont, setHeadingFont] = useState(brand.theme?.headingFont ?? "");
+  const [bodyFont, setBodyFont] = useState(brand.theme?.bodyFont ?? "");
+  const [stylePreset, setStylePreset] = useState(brand.theme?.stylePreset ?? "");
   const [slots, setSlots] = useState<SectionSlot[]>(sections);
 
   function move(index: number, dir: -1 | 1) {
@@ -63,7 +71,19 @@ export function ClientSettingsForm({ clientId, edited, brand, sections }: Props)
       await saveClientSettings(clientId, {
         name,
         logo,
-        theme: { accent, background, surface, foreground },
+        theme: {
+          accent,
+          accent2,
+          background,
+          surface,
+          foreground,
+          muted,
+          border,
+          radius,
+          headingFont,
+          bodyFont,
+          stylePreset: stylePreset as "luxury" | "tech" | "lifestyle" | "beauty" | undefined,
+        },
         sections: slots,
       });
       setSaved(true);
@@ -110,10 +130,50 @@ export function ClientSettingsForm({ clientId, edited, brand, sections }: Props)
             </div>
 
             <div className="grid grid-cols-2 gap-3">
+              <SelectField
+                label="Style preset"
+                value={stylePreset}
+                onChange={setStylePreset}
+                options={[
+                  { label: "Default luxury", value: "" },
+                  { label: "Tech / sharp", value: "tech" },
+                  { label: "Lifestyle / warm", value: "lifestyle" },
+                  { label: "Beauty / soft", value: "beauty" },
+                ]}
+              />
+              <Field label="Card radius" value={radius} onChange={setRadius} placeholder="8px / 16px" />
               <ColorField label="Accent" value={accent} onChange={setAccent} />
+              <ColorField label="Second accent" value={accent2} onChange={setAccent2} />
               <ColorField label="Background" value={background} onChange={setBackground} />
               <ColorField label="Surface" value={surface} onChange={setSurface} />
               <ColorField label="Foreground" value={foreground} onChange={setForeground} />
+              <ColorField label="Muted text" value={muted} onChange={setMuted} />
+              <ColorField label="Border" value={border} onChange={setBorder} />
+              <SelectField
+                label="Heading font"
+                value={headingFont}
+                onChange={setHeadingFont}
+                options={[
+                  { label: "Default Playfair", value: "" },
+                  { label: "Editorial", value: "editorial" },
+                  { label: "Geometric", value: "geometric" },
+                  { label: "Shabnam فارسی", value: "shabnam" },
+                  { label: "Diodrum فارسی", value: "diodrum" },
+                  { label: "Vazirmatn فارسی", value: "vazirmatn" },
+                ]}
+              />
+              <SelectField
+                label="Body font"
+                value={bodyFont}
+                onChange={setBodyFont}
+                options={[
+                  { label: "Default Inter", value: "" },
+                  { label: "Geometric", value: "geometric" },
+                  { label: "Shabnam فارسی", value: "shabnam" },
+                  { label: "Diodrum فارسی", value: "diodrum" },
+                  { label: "Vazirmatn فارسی", value: "vazirmatn" },
+                ]}
+              />
             </div>
             <p className="text-[0.6875rem] leading-relaxed text-subtle">
               Leave colours blank to use the shared theme. Set values to override the

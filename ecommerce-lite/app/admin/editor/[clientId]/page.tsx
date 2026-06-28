@@ -40,6 +40,8 @@ export default async function ContentEditorPage({
         hero={config.content.hero}
         categories={config.content.categories.items}
         products={config.content.featured.products}
+        flashSaleProducts={config.content.flashSale.products}
+        bestSellerProducts={config.content.bestSellers.products}
         testimonials={config.content.testimonials.items}
         footer={{ blurb: config.footer.blurb, locale: config.footer.locale }}
       />

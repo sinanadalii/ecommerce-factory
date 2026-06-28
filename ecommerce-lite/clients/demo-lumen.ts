@@ -305,6 +305,14 @@ export const demoLumen: ClientConfig = {
       "LUMEN — premium audio, wearables and smart home, designed to disappear into the everyday. Free shipping, a 30-day home trial and a 2-year warranty on every device.",
     email: "hello@lumen.io",
     announcement: "Free 2-day shipping & a 30-day home trial on every device",
+    theme: {
+      stylePreset: "tech",
+      headingFont: "geometric",
+      bodyFont: "inter",
+      accent: "#72e4ff",
+      accent2: "#8a7cff",
+      radius: "4px",
+    },
   },
 
   theme: { tokens: "app/globals.css" },

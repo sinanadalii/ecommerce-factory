@@ -21,7 +21,7 @@ type ProductCardProps = {
  * Sellers. Image hover-zooms, a wishlist toggle sits top-right, and an
  * "Add to Bag" bar reveals on hover (and is always visible on touch via focus).
  *
- * `onClick` handlers are demo stubs — wire them to your cart/wishlist store.
+ * Phase 2: the purchase CTA opens checkout for the selected item.
  */
 export function ProductCard({ product, priority = false, className }: ProductCardProps) {
   const [wished, setWished] = useState(false);
@@ -66,13 +66,13 @@ export function ProductCard({ product, priority = false, className }: ProductCar
 
         {/* Add to bag — reveals on hover / focus-within */}
         <div className="absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
-          <button
-            type="button"
+          <a
+            href={`/checkout?product=${encodeURIComponent(product.slug)}`}
             className="flex h-11 w-full items-center justify-center gap-2 rounded-[7px] bg-foreground text-sm font-medium text-background transition-colors hover:bg-white"
           >
             <ShoppingBag className="size-4" strokeWidth={1.75} />
-            Add to Bag
-          </button>
+            Buy now
+          </a>
         </div>
       </div>
 

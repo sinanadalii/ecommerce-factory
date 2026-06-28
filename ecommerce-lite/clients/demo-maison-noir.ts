@@ -305,6 +305,14 @@ export const demoMaisonNoir: ClientConfig = {
       "MAISON NOIR — a considered wardrobe of cashmere, tailoring and leather, made in small ateliers and built to outlive the season. Ethically crafted, lifetime-repaired, delivered worldwide.",
     email: "care@maisonnoir.com",
     announcement: "Complimentary worldwide shipping & returns on orders over $300",
+    theme: {
+      stylePreset: "beauty",
+      headingFont: "editorial",
+      bodyFont: "inter",
+      accent: "#f0a7c2",
+      accent2: "#d8b4fe",
+      radius: "16px",
+    },
   },
 
   theme: { tokens: "app/globals.css" },

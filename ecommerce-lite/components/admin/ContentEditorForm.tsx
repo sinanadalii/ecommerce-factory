@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { type Dispatch, type SetStateAction, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Check, Plus, Save, Trash2 } from "lucide-react";
 import type { Category, HeroProps, Product, Testimonial } from "@/config/types";
@@ -18,6 +18,8 @@ type Props = {
   hero: HeroProps;
   categories: Category[];
   products: Product[];
+  flashSaleProducts: Product[];
+  bestSellerProducts: Product[];
   testimonials: Testimonial[];
   footer: { blurb: string; locale: string };
 };
@@ -36,6 +38,8 @@ export function ContentEditorForm({
   hero,
   categories,
   products,
+  flashSaleProducts,
+  bestSellerProducts,
   testimonials,
   footer,
 }: Props) {
@@ -52,10 +56,13 @@ export function ContentEditorForm({
   const [primaryHref, setPrimaryHref] = useState(hero.primaryCta.href);
   const [secondaryLabel, setSecondaryLabel] = useState(hero.secondaryCta.label);
   const [secondaryHref, setSecondaryHref] = useState(hero.secondaryCta.href);
+  const [heroProductImage, setHeroProductImage] = useState(hero.product.image);
 
   // Lists (hold full objects, edit a subset, preserve the rest)
   const [cats, setCats] = useState<Category[]>(categories);
   const [prods, setProds] = useState<Product[]>(products);
+  const [flashProds, setFlashProds] = useState<Product[]>(flashSaleProducts);
+  const [bestProds, setBestProds] = useState<Product[]>(bestSellerProducts);
   const [quotes, setQuotes] = useState<Testimonial[]>(testimonials);
 
   // Footer
@@ -75,15 +82,91 @@ export function ContentEditorForm({
           primaryHref,
           secondaryLabel,
           secondaryHref,
+          productImage: heroProductImage,
         },
         categories: cats,
         products: prods,
+        flashSaleProducts: flashProds,
+        bestSellerProducts: bestProds,
         testimonials: quotes,
         footer: { blurb, locale },
       });
       setSaved(true);
       router.refresh();
     });
+  }
+
+  function renderProductPanel(
+    title: string,
+    description: string,
+    items: Product[],
+    setItems: Dispatch<SetStateAction<Product[]>>,
+  ) {
+    return (
+      <Panel
+        title={title}
+        description={description}
+        actions={
+          <AdminButton
+            variant="ghost"
+            onClick={() =>
+              setItems((p) => [
+                ...p,
+                {
+                  id: newId("p"),
+                  slug: "new-product",
+                  name: "New product",
+                  category: "Uncategorised",
+                  price: 0,
+                  rating: 4.5,
+                  reviewCount: 0,
+                  image: picsum(newId("p-img"), 800, 1000),
+                },
+              ])
+            }
+          >
+            <Plus className="size-3.5" strokeWidth={2} /> Add
+          </AdminButton>
+        }
+      >
+        <ul className="space-y-3">
+          {items.map((p, i) => (
+            <li key={p.id} className="rounded-lg border border-border bg-background/40 p-3">
+              <div className="grid gap-3 lg:grid-cols-[1fr_0.8fr_0.35fr_auto] lg:items-end">
+                <Field
+                  label={`Product ${i + 1}`}
+                  value={p.name}
+                  onChange={(v) => setItems((cur) => cur.map((x, idx) => (idx === i ? { ...x, name: v } : x)))}
+                />
+                <Field
+                  label="Category"
+                  value={p.category}
+                  onChange={(v) => setItems((cur) => cur.map((x, idx) => (idx === i ? { ...x, category: v } : x)))}
+                />
+                <Field
+                  label="Price"
+                  type="number"
+                  value={String(p.price)}
+                  onChange={(v) =>
+                    setItems((cur) => cur.map((x, idx) => (idx === i ? { ...x, price: Number(v) || 0 } : x)))
+                  }
+                />
+                <IconAction label="Remove product" onClick={() => setItems((cur) => cur.filter((_, idx) => idx !== i))}>
+                  <Trash2 className="size-4" strokeWidth={1.75} />
+                </IconAction>
+              </div>
+              <div className="mt-3">
+                <Field
+                  label="Product image URL"
+                  value={p.image}
+                  onChange={(v) => setItems((cur) => cur.map((x, idx) => (idx === i ? { ...x, image: v } : x)))}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Panel>
+    );
   }
 
   return (
@@ -102,6 +185,13 @@ export function ContentEditorForm({
           <Field label="Primary button link" value={primaryHref} onChange={setPrimaryHref} />
           <Field label="Secondary button label" value={secondaryLabel} onChange={setSecondaryLabel} />
           <Field label="Secondary button link" value={secondaryHref} onChange={setSecondaryHref} />
+          <div className="sm:col-span-2">
+            <Field
+              label="Hero product image URL"
+              value={heroProductImage}
+              onChange={setHeroProductImage}
+            />
+          </div>
         </div>
       </Panel>
 
@@ -149,6 +239,13 @@ export function ContentEditorForm({
                   }
                 />
               </div>
+              <div className="flex-1">
+                <Field
+                  label="Image URL"
+                  value={c.image}
+                  onChange={(v) => setCats((cur) => cur.map((x, idx) => (idx === i ? { ...x, image: v } : x)))}
+                />
+              </div>
               <IconAction label="Remove category" onClick={() => setCats((cur) => cur.filter((_, idx) => idx !== i))}>
                 <Trash2 className="size-4" strokeWidth={1.75} />
               </IconAction>
@@ -157,67 +254,9 @@ export function ContentEditorForm({
         </ul>
       </Panel>
 
-      {/* Featured products */}
-      <Panel
-        title="Featured products"
-        description="The products shown in the Featured strip."
-        actions={
-          <AdminButton
-            variant="ghost"
-            onClick={() =>
-              setProds((p) => [
-                ...p,
-                {
-                  id: newId("p"),
-                  slug: "new-product",
-                  name: "New product",
-                  category: "Uncategorised",
-                  price: 0,
-                  rating: 4.5,
-                  reviewCount: 0,
-                  image: picsum(newId("p-img"), 800, 1000),
-                },
-              ])
-            }
-          >
-            <Plus className="size-3.5" strokeWidth={2} /> Add
-          </AdminButton>
-        }
-      >
-        <ul className="space-y-3">
-          {prods.map((p, i) => (
-            <li key={p.id} className="flex items-end gap-3 rounded-lg border border-border bg-background/40 p-3">
-              <div className="flex-1">
-                <Field
-                  label={`Product ${i + 1}`}
-                  value={p.name}
-                  onChange={(v) => setProds((cur) => cur.map((x, idx) => (idx === i ? { ...x, name: v } : x)))}
-                />
-              </div>
-              <div className="w-36">
-                <Field
-                  label="Category"
-                  value={p.category}
-                  onChange={(v) => setProds((cur) => cur.map((x, idx) => (idx === i ? { ...x, category: v } : x)))}
-                />
-              </div>
-              <div className="w-24">
-                <Field
-                  label="Price"
-                  type="number"
-                  value={String(p.price)}
-                  onChange={(v) =>
-                    setProds((cur) => cur.map((x, idx) => (idx === i ? { ...x, price: Number(v) || 0 } : x)))
-                  }
-                />
-              </div>
-              <IconAction label="Remove product" onClick={() => setProds((cur) => cur.filter((_, idx) => idx !== i))}>
-                <Trash2 className="size-4" strokeWidth={1.75} />
-              </IconAction>
-            </li>
-          ))}
-        </ul>
-      </Panel>
+      {renderProductPanel("Featured products", "The products shown in the Featured strip.", prods, setProds)}
+      {renderProductPanel("Flash sale products", "Products shown in the sale/countdown section.", flashProds, setFlashProds)}
+      {renderProductPanel("Best sellers", "Products shown in the bestseller grid.", bestProds, setBestProds)}
 
       {/* Testimonials */}
       <Panel

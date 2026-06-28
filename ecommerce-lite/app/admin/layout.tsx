@@ -30,6 +30,12 @@ export default function AdminLayout({
               <Link href="/admin/dashboard" className="transition-colors hover:text-foreground">
                 Dashboard
               </Link>
+              <Link href="/admin/orders" className="transition-colors hover:text-foreground">
+                Orders
+              </Link>
+              <Link href="/admin/assistant" className="transition-colors hover:text-foreground">
+                AI assistant
+              </Link>
             </nav>
           </div>
           <a

@@ -305,6 +305,14 @@ export const demoTerraAsh: ClientConfig = {
       "TERRA & ASH — clean-burning fragrance, hand-made objects and slow-living essentials for a considered home. Carbon-neutral delivery, refillable by design.",
     email: "hello@terraandash.com",
     announcement: "Carbon-neutral delivery & free returns on orders over $75",
+    theme: {
+      stylePreset: "lifestyle",
+      headingFont: "editorial",
+      bodyFont: "inter",
+      accent: "#d6b46d",
+      accent2: "#9fbf9a",
+      radius: "14px",
+    },
   },
 
   theme: { tokens: "app/globals.css" },
