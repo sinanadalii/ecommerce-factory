@@ -8,6 +8,7 @@ import { saveContent } from "@/app/admin/actions";
 import {
   AdminButton,
   Field,
+  ImageField,
   IconAction,
   Panel,
   TextAreaField,
@@ -156,7 +157,7 @@ export function ContentEditorForm({
                 </IconAction>
               </div>
               <div className="mt-3">
-                <Field
+                <ImageField
                   label="Product image URL"
                   value={p.image}
                   onChange={(v) => setItems((cur) => cur.map((x, idx) => (idx === i ? { ...x, image: v } : x)))}
@@ -186,7 +187,7 @@ export function ContentEditorForm({
           <Field label="Secondary button label" value={secondaryLabel} onChange={setSecondaryLabel} />
           <Field label="Secondary button link" value={secondaryHref} onChange={setSecondaryHref} />
           <div className="sm:col-span-2">
-            <Field
+            <ImageField
               label="Hero product image URL"
               value={heroProductImage}
               onChange={setHeroProductImage}
@@ -240,7 +241,7 @@ export function ContentEditorForm({
                 />
               </div>
               <div className="flex-1">
-                <Field
+                <ImageField
                   label="Image URL"
                   value={c.image}
                   onChange={(v) => setCats((cur) => cur.map((x, idx) => (idx === i ? { ...x, image: v } : x)))}

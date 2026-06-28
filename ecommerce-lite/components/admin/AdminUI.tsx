@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -60,6 +60,94 @@ export function Field({
         className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground placeholder:text-subtle transition-colors focus:border-gold/50 focus:outline-none"
       />
     </label>
+  );
+}
+
+export function ImageField({
+  label,
+  value,
+  onChange,
+  placeholder = "/uploads/image.png or https://...",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
+  const inputId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function upload(file: File): Promise<void> {
+    setUploading(true);
+    setError(null);
+
+    try {
+      const data = new FormData();
+      data.append("file", file);
+
+      const response = await fetch("/api/admin/upload-image", {
+        method: "POST",
+        body: data,
+      });
+      const result = (await response.json()) as { url?: string; error?: string };
+
+      if (!response.ok || !result.url) {
+        throw new Error(result.error ?? "Upload failed.");
+      }
+
+      onChange(result.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="block">
+      <span className="mb-1.5 block text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-subtle">
+        {label}
+      </span>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <input
+          type="text"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground placeholder:text-subtle transition-colors focus:border-gold/50 focus:outline-none"
+        />
+        <button
+          type="button"
+          disabled={uploading}
+          onClick={() => inputRef.current?.click()}
+          className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg border border-border px-4 text-xs font-semibold text-foreground transition-colors hover:border-gold/50 hover:text-gold disabled:pointer-events-none disabled:opacity-50"
+        >
+          {uploading ? "Uploading..." : "Upload"}
+        </button>
+        <input
+          ref={inputRef}
+          id={inputId}
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            e.currentTarget.value = "";
+            if (file) void upload(file);
+          }}
+        />
+      </div>
+      {value ? (
+        <div className="mt-2 flex items-center gap-2 rounded-lg border border-border bg-background/40 p-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={value} alt="" className="size-12 rounded-md object-cover" />
+          <code className="min-w-0 truncate text-xs text-muted">{value}</code>
+        </div>
+      ) : null}
+      {error ? <p className="mt-1.5 text-xs text-sale">{error}</p> : null}
+    </div>
   );
 }
 

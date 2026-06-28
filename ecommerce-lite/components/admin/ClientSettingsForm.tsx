@@ -9,6 +9,7 @@ import {
   AdminButton,
   ColorField,
   Field,
+  ImageField,
   IconAction,
   Panel,
   SelectField,
@@ -105,7 +106,7 @@ export function ClientSettingsForm({ clientId, edited, brand, sections }: Props)
         <Panel title="Brand identity" description="Name, logo and accent colours.">
           <div className="space-y-4">
             <Field label="Brand name" value={name} onChange={setName} placeholder="Store name" />
-            <Field
+            <ImageField
               label="Logo image URL"
               value={logo}
               onChange={setLogo}
