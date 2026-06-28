@@ -1,4 +1,5 @@
 import { ArrowRight, Check } from "lucide-react";
+import { ENGINE_LINKS } from "@/data/content";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 
@@ -21,7 +22,7 @@ export function CTA() {
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button href="#pricing" variant="gold" size="lg">
+              <Button href={ENGINE_LINKS.admin} variant="gold" size="lg">
                 Start building
                 <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>

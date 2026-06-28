@@ -100,6 +100,48 @@ Steps:
 Vercel auto-detects Next.js — no custom build command needed. Both apps also run
 anywhere Next.js runs (a VPS, a container, etc.).
 
+## Deploy on Cloudflare
+
+Cloudflare also needs **two deployments**:
+
+| Cloudflare project | Root Directory | Runtime |
+| --- | --- | --- |
+| `ecommerce-factory-engine` | `ecommerce-lite` | Workers via OpenNext |
+| `ecommerce-factory-marketing` | `marketing-site` | Pages/static Next build |
+
+Engine setup:
+
+```bash
+cd ecommerce-lite
+npm install
+npx wrangler login
+npx wrangler kv namespace create CLIENT_CONFIGS
+```
+
+Copy the returned KV namespace id into `ecommerce-lite/wrangler.jsonc`, replacing
+`replace-with-client-configs-kv-id`, then deploy:
+
+```bash
+npm run cf:build
+npm run cf:deploy
+```
+
+Marketing setup:
+
+Set these variables in the Cloudflare Pages project before redeploying the
+landing page:
+
+```env
+NEXT_PUBLIC_ENGINE_URL=https://your-engine-domain.com
+NEXT_PUBLIC_ENGINE_ADMIN_URL=https://your-engine-domain.com/admin/dashboard
+NEXT_PUBLIC_DEMO_MAISON_NOIR_URL=https://maison-noir.your-engine-domain.com
+NEXT_PUBLIC_DEMO_LUMEN_URL=https://lumen.your-engine-domain.com
+NEXT_PUBLIC_DEMO_TERRA_ASH_URL=https://terra-ash.your-engine-domain.com
+```
+
+Point the store domains/custom domains at the Worker and map them in
+`ecommerce-lite/config/tenant-resolver.ts`.
+
 ### Environment variables
 
 Copy the example files and adjust as needed (both are git-ignored once copied):
@@ -111,7 +153,8 @@ cp marketing-site/.env.example  marketing-site/.env.local
 
 - **Engine** — `PRODUCT_MODE` (`production` | `demo`) and optional `ACTIVE_CLIENT`.
   In `production` mode, demo stores are never served.
-- **Marketing site** — none required.
+- **Marketing site** — optional `NEXT_PUBLIC_ENGINE_*` / `NEXT_PUBLIC_DEMO_*`
+  URLs connect the landing CTAs to the deployed engine.
 
 ---
 

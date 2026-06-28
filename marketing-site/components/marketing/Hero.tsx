@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, Check, Terminal } from "lucide-react";
+import { ENGINE_LINKS } from "@/data/content";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
@@ -44,7 +45,7 @@ export function Hero() {
 
           {/* CTAs */}
           <div className="animate-fade-up mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button href="#cta" variant="gold" size="lg">
+            <Button href={ENGINE_LINKS.admin} variant="gold" size="lg">
               Start building
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>

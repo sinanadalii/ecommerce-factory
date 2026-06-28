@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ecommerce-factory-engine",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-28",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "PRODUCT_MODE": "production"
+  },
+  "services": [
+    {
+      // Self-reference service binding. Keep this service name equal to "name".
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "ecommerce-factory-engine"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      // Stores admin overrides that used to live in .data/clients.json locally.
+      // Replace this id with the real id from:
+      // npx wrangler kv namespace create CLIENT_CONFIGS
+      "binding": "CLIENT_CONFIGS",
+      "id": "a5446893adb548f280810e861a94e839"
+    }
+  ],
+  "images": {
+    "binding": "IMAGES"
+  }
+}

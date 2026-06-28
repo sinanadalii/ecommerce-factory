@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { PRICING } from "@/data/content";
+import { ENGINE_LINKS, PRICING } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -53,7 +53,7 @@ export function Pricing() {
               </ul>
 
               <Button
-                href="#cta"
+                href={ENGINE_LINKS.admin}
                 variant={tier.featured ? "gold" : "secondary"}
                 size="md"
                 className="mt-7 w-full"

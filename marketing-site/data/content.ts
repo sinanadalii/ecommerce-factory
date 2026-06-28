@@ -9,6 +9,29 @@ export const PRODUCT = {
   email: "hello@ecommercefactory.com",
 } as const;
 
+const envUrl = (value: string | undefined): string | undefined => {
+  value = value?.trim();
+  return value && value !== "#" ? value : undefined;
+};
+
+const withPath = (base: string | undefined, path: string): string | undefined =>
+  base ? `${base.replace(/\/+$/, "")}${path}` : undefined;
+
+const ENGINE_URL = envUrl(process.env.NEXT_PUBLIC_ENGINE_URL);
+
+export const ENGINE_LINKS = {
+  storefront: ENGINE_URL ?? "#demos",
+  admin:
+    envUrl(process.env.NEXT_PUBLIC_ENGINE_ADMIN_URL) ??
+    withPath(ENGINE_URL, "/admin/dashboard") ??
+    "#pricing",
+  demos: {
+    maisonNoir: envUrl(process.env.NEXT_PUBLIC_DEMO_MAISON_NOIR_URL) ?? ENGINE_URL ?? "#",
+    lumen: envUrl(process.env.NEXT_PUBLIC_DEMO_LUMEN_URL) ?? ENGINE_URL ?? "#",
+    terraAsh: envUrl(process.env.NEXT_PUBLIC_DEMO_TERRA_ASH_URL) ?? ENGINE_URL ?? "#",
+  },
+} as const;
+
 export const NAV_LINKS = [
   { label: "Demos", href: "#demos" },
   { label: "Features", href: "#features" },
@@ -110,7 +133,7 @@ export const DEMOS: Demo[] = [
       { name: "Silk Slip Dress", price: "$420", image: ph("mf-p2", 600, 750) },
       { name: "Wool Blazer", price: "$690", image: ph("mf-p3", 600, 750) },
     ],
-    href: "#",
+    href: ENGINE_LINKS.demos.maisonNoir,
   },
   {
     id: "lumen",
@@ -127,7 +150,7 @@ export const DEMOS: Demo[] = [
       { name: "LUMEN Watch Series 3", price: "$449", image: ph("lt-p2", 600, 750) },
       { name: "LUMEN Studio Monitors", price: "$1,290", image: ph("lt-p3", 600, 750) },
     ],
-    href: "#",
+    href: ENGINE_LINKS.demos.lumen,
   },
   {
     id: "terra-ash",
@@ -144,7 +167,7 @@ export const DEMOS: Demo[] = [
       { name: "Baby Alpaca Throw", price: "$340", image: ph("ta-p2", 600, 750) },
       { name: "Stoneware Vase", price: "$165", image: ph("ta-p3", 600, 750) },
     ],
-    href: "#",
+    href: ENGINE_LINKS.demos.terraAsh,
   },
 ];
 

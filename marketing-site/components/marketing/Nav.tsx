@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Boxes, Menu, X } from "lucide-react";
-import { NAV_LINKS, PRODUCT } from "@/data/content";
+import { ENGINE_LINKS, NAV_LINKS, PRODUCT } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -65,7 +65,7 @@ export function Nav() {
               >
                 Live demos
               </a>
-              <Button href="#cta" variant="gold" size="sm">
+              <Button href={ENGINE_LINKS.admin} variant="gold" size="sm">
                 Get started
               </Button>
             </div>
@@ -124,7 +124,13 @@ export function Nav() {
             ))}
           </nav>
           <div className="mt-auto border-t border-border p-5">
-            <Button href="#cta" variant="gold" size="md" className="w-full" onClick={() => setOpen(false)}>
+            <Button
+              href={ENGINE_LINKS.admin}
+              variant="gold"
+              size="md"
+              className="w-full"
+              onClick={() => setOpen(false)}
+            >
               Get started
             </Button>
           </div>

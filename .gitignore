@@ -21,6 +21,8 @@
 # per-app .gitignore too, listed here as a backstop).
 **/node_modules/
 **/.next/
+**/.open-next/
+**/.wrangler/
 **/out/
 **/.env
 **/.env.local

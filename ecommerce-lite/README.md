@@ -33,6 +33,34 @@ npm run create-store "Acme Co"    # or scaffold a store directly
 npm run build && npm run start    # production build
 ```
 
+## Cloudflare Workers
+
+This app is ready for Cloudflare Workers via OpenNext. The admin persistence
+uses Cloudflare KV in production and `.data/clients.json` locally.
+
+One-time setup:
+
+```bash
+npx wrangler login
+npx wrangler kv namespace create CLIENT_CONFIGS
+```
+
+Copy the returned namespace id into `wrangler.jsonc`, replacing
+`replace-with-client-configs-kv-id`.
+
+Build and test the Worker locally:
+
+```bash
+npm run cf:build
+npm run cf:preview
+```
+
+Deploy:
+
+```bash
+npm run cf:deploy
+```
+
 **Which store renders is resolved per request**, by priority (no rebuild):
 
 1. **Production domain / subdomain** — real stores only, mapped in
