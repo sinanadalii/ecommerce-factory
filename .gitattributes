@@ -1,0 +1,20 @@
+# Normalize line endings to LF in the repository for cross-platform consistency
+# (important for Linux-based deploys such as Vercel).
+* text=auto eol=lf
+
+# Keep shell/text configs as LF explicitly.
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.json text eol=lf
+*.css  text eol=lf
+*.md   text eol=lf
+
+# Common binaries (none tracked today, but safe defaults).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+*.pdf  binary

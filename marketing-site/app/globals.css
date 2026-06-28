@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/*
+  ───────────────────────────────────────────────────────────────────────────
+  Ecommerce Factory — marketing site.
+
+  Uses the SAME design system as the product (identical @theme tokens), so the
+  site feels like the thing it sells. A few marketing-only utilities are added
+  at the bottom; the token block is shared, not modified.
+  ───────────────────────────────────────────────────────────────────────────
+*/
+@theme {
+  /* Surfaces — near-black, warm-tinted for a high-end feel */
+  --color-background: #0a0a0b;
+  --color-surface: #141416;
+  --color-surface-2: #1c1c20;
+  --color-overlay: rgba(10, 10, 11, 0.72);
+
+  /* Text */
+  --color-foreground: #f4f1ea;
+  --color-muted: #9c9ca6;
+  --color-subtle: #6a6a73;
+
+  /* Lines */
+  --color-border: rgba(255, 255, 255, 0.09);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Accent — champagne gold */
+  --color-gold: #c7a96b;
+  --color-gold-bright: #e4cd95;
+  --color-gold-dim: rgba(199, 169, 107, 0.14);
+
+  /* Positive (used for comparison ticks) */
+  --color-sale: #e2647a;
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-playfair), "Playfair Display", ui-serif, Georgia,
+    "Times New Roman", serif;
+
+  --radius-card: 8px;
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(199, 169, 107, 0.3);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a30;
+    border-radius: 9999px;
+    border: 2px solid var(--color-background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a3a42;
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 100;
+    border-radius: 6px;
+    background: var(--color-foreground);
+    color: var(--color-background);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: top 0.2s var(--ease-lux);
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(
+      180deg,
+      var(--color-gold-bright) 0%,
+      var(--color-gold) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ── Marketing-only utilities (additive; the design system is untouched) ── */
+
+  /* Faint blueprint grid for section backgrounds */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.04) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Hairline top border that fades from the gold accent */
+  .rule-gold {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(199, 169, 107, 0.5),
+      transparent
+    );
+  }
+
+  .balance {
+    text-wrap: balance;
+  }
+}
+
+/* ── Animations (shared with the product) ─────────────────────────────────── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s var(--ease-lux) both;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 34s linear infinite;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

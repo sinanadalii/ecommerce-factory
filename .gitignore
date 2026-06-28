@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ecommerce Factory — monorepo root .gitignore
+#
+# This repository contains ONLY the two applications below. The working
+# directory may hold unrelated projects/files; everything is ignored by default
+# and only the product is tracked. Each app has its own .gitignore for
+# node_modules / .next / env files.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Ignore everything at the repo root by default…
+/*
+
+# …then track only the product.
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/ecommerce-lite/
+!/marketing-site/
+
+# Safety: never commit dependencies, build output or local env (covered by the
+# per-app .gitignore too, listed here as a backstop).
+**/node_modules/
+**/.next/
+**/out/
+**/.env
+**/.env.local
+**/.env*.local
+**/.data/
+**/*.tsbuildinfo
+**/next-env.d.ts
+.DS_Store
