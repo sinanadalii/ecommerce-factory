@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Zap } from "lucide-react";
-import type { FlashSaleProps } from "@/config/types";
-import { pad2 } from "@/lib/utils";
+import type { FlashSaleProps, TextAlign, TextScale } from "@/config/types";
+import { cn, pad2 } from "@/lib/utils";
 import { Section } from "@/components/ui/Section";
 import { ProductGrid } from "@/components/product/ProductGrid";
 
@@ -38,8 +38,22 @@ function CountUnit({ value, label }: { value: number; label: string }) {
  * server/client markup matches — units render as 00 until hydration. All copy,
  * the sale window and the product list arrive via `FlashSaleProps`.
  */
-export function FlashSale({ badge, title, subtitle, durationMs, products }: FlashSaleProps) {
+export function FlashSale({ badge, title, subtitle, durationMs, products, settings }: FlashSaleProps) {
   const [time, setTime] = useState<TimeLeft | null>(null);
+  const textAlign = settings?.textAlign ?? "left";
+  const titleSize = settings?.titleSize ?? "default";
+  const showCountdown = settings?.showCountdown ?? true;
+  const showProducts = settings?.showProducts ?? true;
+  const titleClasses: Record<TextScale, string> = {
+    compact: "text-2xl sm:text-3xl",
+    default: "text-3xl sm:text-4xl",
+    large: "text-4xl sm:text-5xl",
+  };
+  const alignClasses: Record<TextAlign, string> = {
+    left: "text-center lg:text-left",
+    center: "text-center",
+    right: "text-center lg:text-right",
+  };
 
   useEffect(() => {
     const target = Date.now() + durationMs;
@@ -58,34 +72,35 @@ export function FlashSale({ badge, title, subtitle, durationMs, products }: Flas
       </div>
 
       <div className="relative flex flex-col items-center gap-8 rounded-[20px] border border-border bg-surface/50 p-6 sm:p-10 lg:flex-row lg:justify-between">
-        <div className="text-center lg:text-left">
+        <div className={cn(alignClasses[textAlign], textAlign === "right" && "lg:order-2")}>
           <span className="inline-flex items-center gap-2 rounded-full bg-sale/15 px-3 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-sale">
             <Zap className="size-3.5 fill-sale" strokeWidth={0} />
             {badge}
           </span>
-          <h2 className="mt-4 font-serif text-3xl font-medium leading-tight text-foreground sm:text-4xl">
+          <h2 className={cn("mt-4 font-serif font-medium leading-tight text-foreground", titleClasses[titleSize])}>
             {title}
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-muted lg:mx-0">{subtitle}</p>
+          <p className={cn("mx-auto mt-3 max-w-md text-sm text-muted", textAlign === "left" && "lg:mx-0", textAlign === "right" && "lg:ml-auto lg:mr-0")}>{subtitle}</p>
         </div>
 
-        {/* Countdown */}
-        <div
-          className="flex items-center gap-2 sm:gap-3"
-          role="timer"
-          aria-label="Time remaining in flash sale"
-        >
-          <CountUnit value={t.d} label="Days" />
-          <span className="pb-6 font-serif text-2xl text-subtle">:</span>
-          <CountUnit value={t.h} label="Hrs" />
-          <span className="pb-6 font-serif text-2xl text-subtle">:</span>
-          <CountUnit value={t.m} label="Min" />
-          <span className="pb-6 font-serif text-2xl text-subtle">:</span>
-          <CountUnit value={t.s} label="Sec" />
-        </div>
+        {showCountdown && (
+          <div
+            className="flex items-center gap-2 sm:gap-3"
+            role="timer"
+            aria-label="Time remaining in flash sale"
+          >
+            <CountUnit value={t.d} label="Days" />
+            <span className="pb-6 font-serif text-2xl text-subtle">:</span>
+            <CountUnit value={t.h} label="Hrs" />
+            <span className="pb-6 font-serif text-2xl text-subtle">:</span>
+            <CountUnit value={t.m} label="Min" />
+            <span className="pb-6 font-serif text-2xl text-subtle">:</span>
+            <CountUnit value={t.s} label="Sec" />
+          </div>
+        )}
       </div>
 
-      <ProductGrid products={products} columns={4} className="mt-12" />
+      {showProducts && <ProductGrid products={products} columns={4} className="mt-12" />}
     </Section>
   );
 }

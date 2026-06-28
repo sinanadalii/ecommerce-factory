@@ -15,21 +15,27 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 export function Testimonials({ heading, items }: TestimonialsProps) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const count = items.length;
+  const visibleItems = items.filter((item) => !item.hidden);
+  const count = visibleItems.length;
 
   const go = useCallback(
-    (next: number) => setIndex(((next % count) + count) % count),
+    (next: number) => {
+      if (count === 0) return;
+      setIndex(((next % count) + count) % count);
+    },
     [count],
   );
 
   // Auto-advance every 6s unless the user is hovering / focused within.
   useEffect(() => {
-    if (paused) return;
+    if (paused || count === 0) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % count), 6000);
     return () => clearInterval(id);
   }, [paused, count]);
 
-  const active = items[index];
+  if (count === 0) return null;
+
+  const active = visibleItems[index % count];
 
   return (
     <Section id="testimonials" className="border-t border-border">
@@ -89,7 +95,7 @@ export function Testimonials({ heading, items }: TestimonialsProps) {
           </button>
 
           <div className="flex items-center gap-2">
-            {items.map((t, i) => (
+            {visibleItems.map((t, i) => (
               <button
                 key={t.id}
                 type="button"

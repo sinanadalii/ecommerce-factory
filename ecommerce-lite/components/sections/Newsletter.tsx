@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { Check, Mail } from "lucide-react";
-import type { NewsletterProps } from "@/config/types";
+import type { NewsletterProps, TextAlign, TextScale } from "@/config/types";
+import { cn } from "@/lib/utils";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 
@@ -18,9 +19,25 @@ export function Newsletter({
   submitLabel,
   successMessage,
   disclaimer,
+  settings,
 }: NewsletterProps) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const textAlign = settings?.textAlign ?? "center";
+  const titleSize = settings?.titleSize ?? "default";
+  const showIcon = settings?.showIcon ?? true;
+  const showForm = settings?.showForm ?? true;
+  const showDisclaimer = settings?.showDisclaimer ?? true;
+  const alignClasses: Record<TextAlign, string> = {
+    left: "text-left",
+    center: "text-center",
+    right: "text-right",
+  };
+  const titleClasses: Record<TextScale, string> = {
+    compact: "text-2xl sm:text-3xl",
+    default: "text-3xl sm:text-4xl",
+    large: "text-4xl sm:text-5xl",
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,25 +53,27 @@ export function Newsletter({
           <div className="absolute left-1/2 top-0 size-[28rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-gold/10 blur-[120px]" />
         </div>
 
-        <div className="relative mx-auto max-w-xl">
-          <span className="inline-flex size-12 items-center justify-center rounded-full border border-gold/30 bg-gold-dim text-gold">
-            <Mail className="size-5" strokeWidth={1.5} />
-          </span>
-          <h2 className="mt-6 font-serif text-3xl font-medium leading-tight text-foreground sm:text-4xl">
+        <div className={cn("relative mx-auto max-w-xl", alignClasses[textAlign])}>
+          {showIcon && (
+            <span className="inline-flex size-12 items-center justify-center rounded-full border border-gold/30 bg-gold-dim text-gold">
+              <Mail className="size-5" strokeWidth={1.5} />
+            </span>
+          )}
+          <h2 className={cn("font-serif font-medium leading-tight text-foreground", showIcon ? "mt-6" : "", titleClasses[titleSize])}>
             {title}
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-muted">
+          <p className={cn("mt-4 max-w-md text-base leading-relaxed text-muted", textAlign === "center" && "mx-auto", textAlign === "right" && "ml-auto")}>
             {description}
           </p>
 
-          {submitted ? (
+          {submitted && showForm ? (
             <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-gold/30 bg-gold-dim px-6 py-3.5 text-sm font-medium text-foreground">
               <span className="inline-flex size-6 items-center justify-center rounded-full bg-gold text-background">
                 <Check className="size-4" strokeWidth={2.5} />
               </span>
               {successMessage}
             </div>
-          ) : (
+          ) : showForm ? (
             <form
               onSubmit={handleSubmit}
               className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
@@ -75,9 +94,9 @@ export function Newsletter({
                 {submitLabel}
               </Button>
             </form>
-          )}
+          ) : null}
 
-          <p className="mt-4 text-xs text-subtle">{disclaimer}</p>
+          {showDisclaimer && <p className="mt-4 text-xs text-subtle">{disclaimer}</p>}
         </div>
       </div>
     </Section>

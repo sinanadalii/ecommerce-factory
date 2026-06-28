@@ -11,9 +11,13 @@ import type {
   BrandTheme,
   Category,
   ClientConfig,
+  FlashSaleProps,
+  NewsletterProps,
   Product,
+  SectionHeadingContent,
   SectionSlot,
   Testimonial,
+  TrustBadgeItem,
 } from "@/config/types";
 
 /**
@@ -85,7 +89,19 @@ export type ContentInput = {
     secondaryLabel: string;
     secondaryHref: string;
     productImage: string;
+    ratingValue: string;
+    ratingSuffix: string;
+    trustNote: string;
+    featuredBadge: string;
+    settings: NonNullable<ClientConfig["content"]["hero"]["settings"]>;
   };
+  categoryHeading: SectionHeadingContent;
+  featuredHeading: SectionHeadingContent;
+  bestSellerHeading: SectionHeadingContent;
+  testimonialHeading: SectionHeadingContent;
+  flashSale: Pick<FlashSaleProps, "badge" | "title" | "subtitle" | "durationMs" | "settings">;
+  trust: { badges: TrustBadgeItem[]; brandLogos: string[] };
+  newsletter: NewsletterProps;
   categories: Category[];
   products: Product[];
   flashSaleProducts: Product[];
@@ -115,12 +131,19 @@ export async function saveContent(
         primaryCta: { label: input.hero.primaryLabel, href: input.hero.primaryHref },
         secondaryCta: { label: input.hero.secondaryLabel, href: input.hero.secondaryHref },
         product: { ...config.content.hero.product, image: input.hero.productImage },
+        ratingValue: input.hero.ratingValue,
+        ratingSuffix: input.hero.ratingSuffix,
+        trustNote: input.hero.trustNote,
+        featuredBadge: input.hero.featuredBadge,
+        settings: input.hero.settings,
       },
-      categories: { ...config.content.categories, items: input.categories },
-      featured: { ...config.content.featured, products: input.products },
-      flashSale: { ...config.content.flashSale, products: input.flashSaleProducts },
-      bestSellers: { ...config.content.bestSellers, products: input.bestSellerProducts },
-      testimonials: { ...config.content.testimonials, items: input.testimonials },
+      categories: { ...config.content.categories, heading: input.categoryHeading, items: input.categories },
+      featured: { ...config.content.featured, heading: input.featuredHeading, products: input.products },
+      flashSale: { ...config.content.flashSale, ...input.flashSale, products: input.flashSaleProducts },
+      bestSellers: { ...config.content.bestSellers, heading: input.bestSellerHeading, products: input.bestSellerProducts },
+      trust: { ...config.content.trust, badges: input.trust.badges, brandLogos: input.trust.brandLogos },
+      testimonials: { ...config.content.testimonials, heading: input.testimonialHeading, items: input.testimonials },
+      newsletter: input.newsletter,
     },
   };
 

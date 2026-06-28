@@ -30,19 +30,26 @@ export default async function ContentEditorPage({
           Edit content — {config.brand.name}
         </h1>
         <p className="mt-1 text-sm text-muted">
-          Hero, categories, products, testimonials and footer text. Saving updates the
-          live store for <code className="text-subtle">{clientId}</code> instantly.
+          Hero, text layout, sections, products, trust badges, newsletter and footer.
+          Saving updates the live store for <code className="text-subtle">{clientId}</code> instantly.
         </p>
       </div>
 
       <ContentEditorForm
         clientId={clientId}
         hero={config.content.hero}
+        categoryHeading={config.content.categories.heading}
+        featuredHeading={config.content.featured.heading}
+        flashSale={config.content.flashSale}
+        bestSellerHeading={config.content.bestSellers.heading}
+        testimonialHeading={config.content.testimonials.heading}
         categories={config.content.categories.items}
         products={config.content.featured.products}
         flashSaleProducts={config.content.flashSale.products}
         bestSellerProducts={config.content.bestSellers.products}
+        trust={config.content.trust}
         testimonials={config.content.testimonials.items}
+        newsletter={config.content.newsletter}
         footer={{ blurb: config.footer.blurb, locale: config.footer.locale }}
       />
     </div>

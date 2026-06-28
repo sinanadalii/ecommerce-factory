@@ -12,12 +12,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
  * Content (heading + tiles) is injected via `CategoriesProps`.
  */
 export function Categories({ heading, items }: CategoriesProps) {
+  const visibleItems = items.filter((cat) => !cat.hidden);
+
   return (
     <Section id="categories">
       <SectionHeading {...heading} />
 
       <div className="mt-12 grid auto-rows-[14rem] grid-cols-2 gap-4 sm:auto-rows-[18rem] lg:grid-cols-4">
-        {items.map((cat) => (
+        {visibleItems.map((cat) => (
           <a
             key={cat.id}
             href="#featured"

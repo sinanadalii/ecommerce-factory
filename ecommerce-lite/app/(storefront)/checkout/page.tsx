@@ -14,7 +14,7 @@ function allProducts(config: Awaited<ReturnType<typeof getActiveClient>>): Produ
     ...config.content.featured.products,
     ...config.content.flashSale.products,
     ...config.content.bestSellers.products,
-  ];
+  ].filter((product) => !product.hidden);
 }
 
 export default async function CheckoutPage({

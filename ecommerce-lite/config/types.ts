@@ -26,6 +26,7 @@ export type Product = {
   image: string;
   badges?: ProductBadge[];
   colors?: string[];
+  hidden?: boolean;
 };
 
 export type Category = {
@@ -35,6 +36,7 @@ export type Category = {
   image: string;
   itemCount: number;
   featured?: boolean;
+  hidden?: boolean;
 };
 
 export type Testimonial = {
@@ -45,6 +47,7 @@ export type Testimonial = {
   location: string;
   rating: number;
   avatar: string;
+  hidden?: boolean;
 };
 
 export type TrustIconKey = "truck" | "shield" | "refresh" | "headset";
@@ -53,6 +56,7 @@ export type TrustBadgeItem = {
   icon: TrustIconKey;
   title: string;
   subtitle: string;
+  hidden?: boolean;
 };
 
 export type NavLink = { label: string; href: string };
@@ -66,12 +70,18 @@ export type SocialLink = { label: string; href: string; icon: SocialIconKey };
 export type Cta = { label: string; href: string };
 
 /** Content for the shared `SectionHeading` ui-kit component. */
+export type TextAlign = "left" | "center" | "right";
+export type TextScale = "compact" | "default" | "large";
+
 export type SectionHeadingContent = {
   eyebrow?: string;
   title: string;
   description?: string;
   action?: Cta;
-  align?: "left" | "center";
+  align?: TextAlign;
+  titleSize?: TextScale;
+  descriptionSize?: TextScale;
+  showAction?: boolean;
 };
 
 /* ── Per-section props ────────────────────────────────────────────────────── */
@@ -88,6 +98,17 @@ export type HeroProps = {
   trustNote: string;
   featuredBadge: string;
   product: Product;
+  settings?: {
+    textPosition?: "left" | "center" | "right";
+    textAlign?: TextAlign;
+    titleSize?: TextScale;
+    descriptionSize?: TextScale;
+    showPrimaryCta?: boolean;
+    showSecondaryCta?: boolean;
+    showTrustRow?: boolean;
+    showProductChip?: boolean;
+    showFeaturedBadge?: boolean;
+  };
 };
 
 export type CategoriesProps = {
@@ -108,6 +129,12 @@ export type FlashSaleProps = {
   /** Length of the sale window from first render, in ms. */
   durationMs: number;
   products: Product[];
+  settings?: {
+    textAlign?: TextAlign;
+    titleSize?: TextScale;
+    showCountdown?: boolean;
+    showProducts?: boolean;
+  };
 };
 
 export type TrustProps = {
@@ -127,6 +154,13 @@ export type NewsletterProps = {
   submitLabel: string;
   successMessage: string;
   disclaimer: string;
+  settings?: {
+    textAlign?: TextAlign;
+    titleSize?: TextScale;
+    showIcon?: boolean;
+    showForm?: boolean;
+    showDisclaimer?: boolean;
+  };
 };
 
 export type HeaderProps = {

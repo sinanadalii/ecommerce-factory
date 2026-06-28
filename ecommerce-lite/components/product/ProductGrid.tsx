@@ -27,9 +27,11 @@ export function ProductGrid({
   priorityCount = 0,
   className,
 }: ProductGridProps) {
+  const visibleProducts = products.filter((product) => !product.hidden);
+
   return (
     <div className={cn("grid gap-x-5 gap-y-10 sm:gap-x-6", columnClasses[columns], className)}>
-      {products.map((product, i) => (
+      {visibleProducts.map((product, i) => (
         <ProductCard key={product.id} product={product} priority={i < priorityCount} />
       ))}
     </div>

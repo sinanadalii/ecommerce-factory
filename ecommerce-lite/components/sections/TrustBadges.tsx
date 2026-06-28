@@ -16,13 +16,14 @@ const icons: Record<TrustIconKey, LucideIcon> = {
  */
 export function TrustBadges({ badges, brandLogos }: TrustProps) {
   // Duplicate the logo list so the marquee loops seamlessly.
-  const marquee = [...brandLogos, ...brandLogos];
+  const visibleBadges = badges.filter((badge) => !badge.hidden);
+  const marquee = [...brandLogos, ...brandLogos].filter(Boolean);
 
   return (
     <section className="border-y border-border bg-surface/40">
       <Container>
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 py-14 lg:grid-cols-4">
-          {badges.map((badge) => {
+          {visibleBadges.map((badge) => {
             const Icon = icons[badge.icon];
             return (
               <div key={badge.title} className="flex items-start gap-4">
