@@ -3,6 +3,7 @@
 declare global {
   interface CloudflareEnv {
     CLIENT_CONFIGS?: KVNamespace;
+    UPLOADS?: R2Bucket;
   }
 }
 
