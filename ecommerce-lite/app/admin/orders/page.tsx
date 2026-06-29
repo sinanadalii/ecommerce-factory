@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PackageCheck, ReceiptText } from "lucide-react";
 import { clients, type ClientKey } from "@/config/active-client";
 import { getAllOrders } from "@/config/order-store";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, isAdminUploadImage } from "@/lib/utils";
 
 export const metadata = { title: "Orders" };
 
@@ -66,7 +66,14 @@ export default async function OrdersPage() {
                   {order.items.map((item) => (
                     <div key={item.productId} className="flex gap-3 rounded-lg border border-border bg-background/40 p-3">
                       <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-surface-2">
-                        <Image src={item.image} alt={item.name} fill sizes="64px" className="object-cover" />
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          sizes="64px"
+                          unoptimized={isAdminUploadImage(item.image)}
+                          className="object-cover"
+                        />
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-foreground">{item.name}</p>

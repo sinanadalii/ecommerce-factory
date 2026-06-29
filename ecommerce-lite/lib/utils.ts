@@ -24,6 +24,11 @@ export function pad2(value: number): string {
 }
 
 /** Discount percentage from a product's compare-at price, rounded — or null. */
+/** Uploaded images are served by an internal API route, so Next's image optimizer should bypass them. */
+export function isAdminUploadImage(src: string): boolean {
+  return src.startsWith("/api/uploads/");
+}
+
 export function discountPercent(product: Product): number | null {
   if (!product.compareAtPrice || product.compareAtPrice <= product.price) {
     return null;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, Star } from "lucide-react";
 import type { HeroProps, TextAlign, TextScale } from "@/config/types";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, isAdminUploadImage } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
@@ -142,6 +142,7 @@ export function Hero({
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 45vw"
+                unoptimized={isAdminUploadImage(product.image)}
                 className="object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
@@ -150,7 +151,14 @@ export function Hero({
             {showProductChip && (
               <div className="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl border border-border-strong bg-background/80 p-3 pr-5 shadow-2xl backdrop-blur-xl sm:left-6">
                 <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-surface">
-                  <Image src={product.image} alt="" fill sizes="56px" className="object-cover" />
+                  <Image
+                    src={product.image}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    unoptimized={isAdminUploadImage(product.image)}
+                    className="object-cover"
+                  />
                 </div>
                 <div>
                   <p className="text-[0.625rem] uppercase tracking-[0.16em] text-subtle">

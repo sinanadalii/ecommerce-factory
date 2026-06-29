@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import type { CategoriesProps } from "@/config/types";
-import { cn } from "@/lib/utils";
+import { cn, isAdminUploadImage } from "@/lib/utils";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -33,6 +33,7 @@ export function Categories({ heading, items }: CategoriesProps) {
               alt={cat.name}
               fill
               sizes={cat.featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
+              unoptimized={isAdminUploadImage(cat.image)}
               className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/20 to-transparent transition-opacity duration-300 group-hover:from-background/90" />

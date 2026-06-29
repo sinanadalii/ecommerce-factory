@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronLeft, Lock, ShoppingBag } from "lucide-react";
 import { getActiveClient } from "@/config/tenant";
 import type { Product } from "@/config/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, isAdminUploadImage } from "@/lib/utils";
 import { placeOrder } from "./actions";
 
 export const metadata = { title: "Checkout" };
@@ -87,7 +87,14 @@ export default async function CheckoutPage({
           </div>
           <div className="mt-5 flex gap-4">
             <div className="relative aspect-[4/5] w-24 shrink-0 overflow-hidden rounded-card bg-surface-2">
-              <Image src={product.image} alt={product.name} fill sizes="96px" className="object-cover" />
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                sizes="96px"
+                unoptimized={isAdminUploadImage(product.image)}
+                className="object-cover"
+              />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold text-foreground">{product.name}</p>

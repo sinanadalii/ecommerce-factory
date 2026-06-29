@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import type { TestimonialsProps } from "@/config/types";
-import { cn } from "@/lib/utils";
+import { cn, isAdminUploadImage } from "@/lib/utils";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -71,6 +71,7 @@ export function Testimonials({ heading, items }: TestimonialsProps) {
                 alt={active.author}
                 fill
                 sizes="44px"
+                unoptimized={isAdminUploadImage(active.avatar)}
                 className="object-cover"
               />
             </span>

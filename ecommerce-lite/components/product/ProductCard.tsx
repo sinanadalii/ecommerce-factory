@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Heart, ShoppingBag } from "lucide-react";
 import type { Product } from "@/config/types";
-import { cn, discountPercent } from "@/lib/utils";
+import { cn, discountPercent, isAdminUploadImage } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Rating } from "@/components/ui/Rating";
 import { Price } from "@/components/ui/Price";
@@ -37,6 +37,7 @@ export function ProductCard({ product, priority = false, className }: ProductCar
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           priority={priority}
+          unoptimized={isAdminUploadImage(product.image)}
           className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
         />
 
